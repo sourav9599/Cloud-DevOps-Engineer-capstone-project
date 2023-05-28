@@ -1,5 +1,16 @@
 version: 2.1
-
+commands:
+  destroy-environment:
+    description: Destroy cloudformation stacks on fail.
+    steps:
+      - run:
+          name: Destroy environments
+          command: |
+            aws cloudformation delete-stack --stack-name "${ENVIRONMENT_NAME}-eks-network"
+            aws cloudformation delete-stack --stack-name "${ENVIRONMENT_NAME}-eks-cluster"
+            aws cloudformation delete-stack --stack-name "${ENVIRONMENT_NAME}-eks-nodegroup"
+            aws cloudformation delete-stack --stack-name "${ENVIRONMENT_NAME}-eks-management"
+          when: on_fail
 jobs:
   test-build:
     docker:
@@ -124,6 +135,7 @@ jobs:
           paths:
             - inventory.txt
             - checkIfDeployed.txt
+      - destroy-environment
 
   configure-infrastructure:
     docker:
