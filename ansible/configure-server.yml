@@ -31,7 +31,7 @@
     - name: Set the aws_secret_access_key
       shell: "aws configure set aws_secret_access_key {{ AWS_SECRET_ACCESS_KEY }}"
     - name: Set the aws_session_token
-      shell: "aws configure set aws_secret_access_key {{ AWS_SESSION_TOKEN }}"
+      shell: "aws configure set aws_session_token {{ AWS_SESSION_TOKEN }}"
     - name: Set the default.region
       shell: "aws configure set default.region {{ AWS_DEFAULT_REGION }}"
 
